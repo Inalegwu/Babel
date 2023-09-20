@@ -17,7 +17,7 @@ type Theme struct {
 }
 
 func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
-	log.Print("Reading JSON Theme Config")
+	log.Printf("Reading %s", fileStat.Name())
 	var themeConfig Theme
 
 	scanner.Split(bufio.ScanLines)
