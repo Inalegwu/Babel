@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/Inalegwu/vsconvert/convert"
+	"github.com/Inalegwu/vsconvert/error"
 	"github.com/Inalegwu/vsconvert/theme"
 )
 
@@ -19,7 +21,9 @@ func main() {
 
 	file, err := os.Open(filePath)
 
-	handleError(err)
+	converter := convert.New(1)
+
+	error.HandleError(err)
 
 	defer file.Close()
 
@@ -29,13 +33,9 @@ func main() {
 
 	fmt.Printf("Starting work on %s theme", theme.Name)
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-}
+	converter.Convert(theme)
 
-func handleError(err error) {
-	if err != nil {
+	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 }

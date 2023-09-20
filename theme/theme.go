@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"encoding/json"
 	"log"
+
+	"github.com/Inalegwu/vsconvert/error"
 )
 
 type ActivityBarConfig struct {
@@ -79,11 +81,7 @@ func New(scanner *bufio.Scanner) Theme {
 
 	err := json.Unmarshal(scanner.Bytes(), &themeConfig)
 
-	handleError(err)
+	error.HandleError(err)
 
 	return themeConfig
-}
-
-func handleError(err error) {
-	log.Fatalf("%s", err)
 }
