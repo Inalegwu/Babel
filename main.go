@@ -29,9 +29,9 @@ func main() {
 
 	// convert flag value passed from environment to
 	// int value
-	flagInt, fErr := strconv.Atoi(convertFlag)
+	flagInt, err := strconv.Atoi(convertFlag)
 
-	error.HandleError(fErr)
+	error.HandleError(err)
 
 	// try opening file
 	file, err := os.Open(filePath)
