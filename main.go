@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 
@@ -36,8 +35,6 @@ func main() {
 	scanner := bufio.NewScanner(file)
 
 	theme := theme.New(scanner, fileStat)
-
-	fmt.Printf("Starting work on %s theme", theme.Name)
 
 	converter.Convert(theme)
 

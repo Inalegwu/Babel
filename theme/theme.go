@@ -22,9 +22,11 @@ func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
 
 	scanner.Split(bufio.ScanLines)
 
-	bytes := make([]byte, fileStat.Size())
+	fileAsString, ff := json.Marshal(scanner.Bytes())
 
-	err := json.Unmarshal(bytes, &themeConfig)
+	error.HandleError(ff)
+
+	err := json.Unmarshal(fileAsString, &themeConfig)
 
 	error.HandleError(err)
 
