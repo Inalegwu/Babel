@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/Inalegwu/vsconvert/convert"
 	"github.com/Inalegwu/vsconvert/error"
@@ -13,10 +14,24 @@ import (
 func main() {
 	log.SetPrefix("VSCONVERT::")
 	filePath := os.Getenv("FILE")
+	convertFlag := os.Getenv("FLAG")
 
+	// ensure appropriate environment flags are passed
+	// should probably turn this into a CLI app eventually just
+	// because
 	if filePath == "" {
 		log.Fatal("Please provide a file path by passing FILE=`file_path` ")
 	}
+
+	if convertFlag == "" {
+		log.Fatal("Please provide a convert flag by passing FLAG=`flag`(int)")
+	}
+
+	// convert flag value passed from environment to
+	// int value
+	flagInt, fErr := strconv.Atoi(convertFlag)
+
+	error.HandleError(fErr)
 
 	// try opening file
 	file, err := os.Open(filePath)
@@ -24,7 +39,7 @@ func main() {
 	error.HandleError(err)
 
 	// initialize the converter with a ConverterType flag (int)
-	converter := convert.New(1)
+	converter := convert.New(flagInt)
 
 	// get file info to use for unmarshalling
 	fileStat, err := file.Stat()
