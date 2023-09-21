@@ -2,8 +2,6 @@ package convert
 
 import (
 	"log"
-	"strings"
-
 	// "github.com/Inalegwu/babel/adapters/helix"
 	"github.com/Inalegwu/babel/theme"
 )
@@ -40,14 +38,7 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 	// var palette helix.Palette
 
 	for _, t := range theme.Colors {
-		parts := strings.Split(t, "#")
-		// splitting by space because strings.Split(t,"#") strips the #
-		// I forgot this 45 Seconds after implementing this
-		// this journey is about to be wild
-		if parts[0] == "" {
-			colorCodes = append(colorCodes, t)
-		}
-
+		colorCodes = append(colorCodes, t)
 	}
 
 	log.Printf("Found %v Color Codes", len(colorCodes))
