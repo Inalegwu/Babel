@@ -31,4 +31,5 @@ func (c *Converter) Convert(theme theme.Theme) error {
 
 func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Converting %s to Helix Theme Format", theme.Name)
+	log.Printf("Theme type detected : %s", theme.Theme_type)
 }

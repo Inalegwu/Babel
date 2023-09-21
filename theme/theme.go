@@ -10,10 +10,10 @@ import (
 )
 
 type Theme struct {
-	Name        string              `json:"name"`
-	Theme_type  string              `json:"type"`
-	Colors      map[string]string   `json:"colors"`
-	TokenColors []map[string]string `json:"tokenColors"`
+	Name       string            `json:"name"`
+	Theme_type string            `json:"type"`
+	Colors     map[string]string `json:"colors"`
+	// TokenColors map[string][]TokenConfig `json:"tokenColors"`
 }
 
 func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
@@ -22,11 +22,16 @@ func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
 
 	scanner.Split(bufio.ScanLines)
 
-	fileAsString, err := json.Marshal(scanner.Bytes())
+	var fileAsString []byte
 
-	error.HandleError(err)
+	for scanner.Scan() {
+		line := scanner.Bytes()
+		for i := 0; i < len(line); i++ {
+			fileAsString = append(fileAsString, line[i])
+		}
+	}
 
-	err = json.Unmarshal(fileAsString, &themeConfig)
+	err := json.Unmarshal(fileAsString, &themeConfig)
 
 	error.HandleError(err)
 
