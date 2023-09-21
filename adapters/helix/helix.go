@@ -19,7 +19,6 @@ type (
 type ColorApiResponse struct {
 	Hex  map[string]string `json:"hex"`
 	Name map[string]string `json:"name"`
-	Rgb  map[string]string `json:"rgb"`
 }
 
 func New() HelixThemeConfig {
@@ -29,35 +28,30 @@ func New() HelixThemeConfig {
 func MakeColorPalette(colorCodes []string, theme theme.Theme) {
 	log.Printf("Generating Color Palette")
 
-	var colorApiResponse []ColorApiResponse
+	// var colorApiResponse ColorApiResponse
 
-	// for _, v := range theme.Colors {
-	// 	parts := strings.Split(v, "#")
-	// 	resp, err := http.Get("https://www.thecolorapi.com/id?" + parts[1])
+	// var colorApiResponseArray []ColorApiResponse
 
-	// 	error.HandleError(err)
+	for _, v := range theme.Colors {
+		parts := strings.Split(v, "#")
+		log.Printf("%s", parts[1])
+		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
-	// 	err = json.Unmarshal([]byte(resp), &colorApiResponse)
+		var response ColorApiResponse
 
-	// 	error.HandleError(err)
+		error.HandleError(err)
 
-	// 	log.Printf("%v", resp)
+		body, err := ioutil.ReadAll(resp.Body)
 
-	// }
+		log.Printf("%s", string(body))
 
-	badge := strings.Split(theme.Colors["badge.background"], "#")
+		err = json.Unmarshal(body, &response)
 
-	resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + badge[1])
+		error.HandleError(err)
 
-	error.HandleError(err)
+		log.Printf("%v", response)
 
-	body, err := ioutil.ReadAll(resp.Body)
-
-	error.HandleError(err)
-
-	err = json.Unmarshal(body, &colorApiResponse)
-
-	log.Printf("%v", colorApiResponse)
+	}
 }
 
 func FromVsConfig(theme.Theme) {
