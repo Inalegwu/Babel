@@ -1,3 +1,3 @@
-module github.com/Inalegwu/vsconvert
+module github.com/Inalegwu/babel
 
 go 1.21

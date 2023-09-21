@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/Inalegwu/vsconvert/theme"
+	"github.com/Inalegwu/babel/theme"
 )
 
 const (

@@ -6,7 +6,7 @@ import (
 	"io/fs"
 	"log"
 
-	"github.com/Inalegwu/vsconvert/error"
+	"github.com/Inalegwu/babel/error"
 )
 
 type Theme struct {

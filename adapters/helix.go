@@ -1,6 +1,6 @@
 package adapters
 
-import "github.com/Inalegwu/vsconvert/theme"
+import "github.com/Inalegwu/babel/theme"
 
 type HelixThemeConfig struct{}
 

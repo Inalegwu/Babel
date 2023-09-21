@@ -6,9 +6,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Inalegwu/vsconvert/convert"
-	"github.com/Inalegwu/vsconvert/error"
-	"github.com/Inalegwu/vsconvert/theme"
+	"github.com/Inalegwu/babel/convert"
+	"github.com/Inalegwu/babel/error"
+	"github.com/Inalegwu/babel/theme"
 )
 
 func main() {
