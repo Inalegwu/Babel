@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/Inalegwu/babel/convert"
-	"github.com/Inalegwu/babel/error"
+	customError "github.com/Inalegwu/babel/error"
 	"github.com/Inalegwu/babel/theme"
 )
 
@@ -31,19 +31,19 @@ func main() {
 	// int value
 	flagInt, err := strconv.Atoi(convertFlag)
 
-	error.HandleError(err)
+	customError.HandleError(err)
 
 	// try opening file
 	file, err := os.Open(filePath)
 
-	error.HandleError(err)
+	customError.HandleError(err)
 
 	// initialize the converter with a ConverterType flag (int)
 	converter := convert.New(flagInt)
 
 	// get file info to use for unmarshalling
 	fileStat, err := file.Stat()
-	error.HandleError(err)
+	customError.HandleError(err)
 
 	defer file.Close()
 

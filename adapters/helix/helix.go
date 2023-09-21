@@ -1,13 +1,10 @@
 package helix
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"strings"
 
-	errorCustom "github.com/Inalegwu/babel/error"
+	"github.com/Inalegwu/babel/request"
 	"github.com/Inalegwu/babel/theme"
 	"github.com/pelletier/go-toml"
 )
@@ -24,45 +21,33 @@ type Name struct {
 	Distance        int    `json:"distance"`
 }
 
-type ColorApiResponse struct {
-	Hex  map[string]string `json:"hex"`
-	Name map[string]any    `json:"name"`
-}
+func New(colorPalette []request.ColorApiResponse, theme theme.Theme) HelixThemeConfig {
+	// convert color palette to use
+	// in theme config definition
+	var palette map[string]string
 
-func New(colorPalette []ColorApiResponse, theme theme.Theme) HelixThemeConfig {
-	// var constant string
-	// for _, v := range theme.TokenColors {
-	// 	scope := v["scope"]
-	// 	settings := v["settings"]
-
-	// 	log.Printf("%s , %s", scope, settings)
-	// }
+	for _, v := range colorPalette {
+		name := v.Hex
+		palette[name["value"]] = v.Hex["value"]
+	}
 
 	return HelixThemeConfig{
 		// define the color scheme type "dark"|"light"|"other"
 		"type": theme.Theme_type,
 		// tree-sitter scopes
+		"palette": palette,
 	}
 }
 
-func MakeColorPalette(colorCodes []string) []ColorApiResponse {
-	log.Printf("Generating Color Palette.This may take a while")
+func MakeColorPalette(colorCodes []string) []request.ColorApiResponse {
+	log.Printf("Generating Color Palette.This may take a while...")
 
-	var colorApiResponseArray []ColorApiResponse
+	var colorApiResponseArray []request.ColorApiResponse
 
 	for _, v := range colorCodes {
 		parts := strings.Split(v, "#")
-		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
-		var response ColorApiResponse
-
-		errorCustom.HandleError(err)
-
-		body, err := ioutil.ReadAll(resp.Body)
-
-		err = json.Unmarshal(body, &response)
-
-		errorCustom.HandleError(err)
+		response := request.GetColorCodeName(parts[1])
 
 		colorApiResponseArray = append(colorApiResponseArray, response)
 	}
