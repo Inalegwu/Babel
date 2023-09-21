@@ -9,10 +9,10 @@ import (
 )
 
 type Theme struct {
-	Name       string            `json:"name"`
-	Theme_type string            `json:"type"`
-	Colors     map[string]string `json:"colors"`
-	// TokenColors map[string][]TokenConfig `json:"tokenColors"`
+	Name        string            `json:"name"`
+	Theme_type  string            `json:"type"`
+	Colors      map[string]string `json:"colors"`
+	TokenColors []map[string]any  `json:"tokenColors"`
 }
 
 func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {

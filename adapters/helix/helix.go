@@ -7,7 +7,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Inalegwu/babel/error"
+	errorCustom "github.com/Inalegwu/babel/error"
+	"github.com/Inalegwu/babel/theme"
+	"github.com/pelletier/go-toml"
 )
 
 type (
@@ -27,8 +29,20 @@ type ColorApiResponse struct {
 	Name map[string]any    `json:"name"`
 }
 
-func New() HelixThemeConfig {
-	return HelixThemeConfig{}
+func New(colorPalette []ColorApiResponse, theme theme.Theme) HelixThemeConfig {
+	// var constant string
+	// for _, v := range theme.TokenColors {
+	// 	scope := v["scope"]
+	// 	settings := v["settings"]
+
+	// 	log.Printf("%s , %s", scope, settings)
+	// }
+
+	return HelixThemeConfig{
+		// define the color scheme type "dark"|"light"|"other"
+		"type": theme.Theme_type,
+		// tree-sitter scopes
+	}
 }
 
 func MakeColorPalette(colorCodes []string) []ColorApiResponse {
@@ -42,13 +56,13 @@ func MakeColorPalette(colorCodes []string) []ColorApiResponse {
 
 		var response ColorApiResponse
 
-		error.HandleError(err)
+		errorCustom.HandleError(err)
 
 		body, err := ioutil.ReadAll(resp.Body)
 
 		err = json.Unmarshal(body, &response)
 
-		error.HandleError(err)
+		errorCustom.HandleError(err)
 
 		colorApiResponseArray = append(colorApiResponseArray, response)
 	}
@@ -56,4 +70,12 @@ func MakeColorPalette(colorCodes []string) []ColorApiResponse {
 	log.Printf("Color Palette Generated Successfully")
 
 	return colorApiResponseArray
+}
+
+func WriteToml(helixThemeConfig HelixThemeConfig) ([]byte, error) {
+	toml, err := toml.Marshal(helixThemeConfig)
+	if err != nil {
+		return nil, err
+	}
+	return toml, nil
 }

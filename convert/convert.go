@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Inalegwu/babel/adapters/helix"
+	customError "github.com/Inalegwu/babel/error"
 	"github.com/Inalegwu/babel/theme"
 	"github.com/Inalegwu/babel/utils"
 )
@@ -58,6 +59,14 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Found %v unique color codes. These will be used to generate the Color Palette", len(uniqueColorCodes))
 
 	palette := helix.MakeColorPalette(uniqueColorCodes)
+
+	helixTheme := helix.New(palette, theme)
+
+	toml, err := helix.WriteToml(helixTheme)
+
+	customError.HandleError(err)
+
+	log.Printf("%v", string(toml))
 
 	log.Printf("%v", len(palette))
 }
