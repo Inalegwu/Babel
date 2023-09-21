@@ -4,7 +4,7 @@ import (
 	"log"
 	// "github.com/Inalegwu/babel/adapters/helix"
 	"github.com/Inalegwu/babel/theme"
-	"github.com/Inalegwu/babel/utils"
+	// "github.com/Inalegwu/babel/utils"
 )
 
 const (
@@ -34,7 +34,7 @@ type ColorCodes []string
 
 func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Converting %s to Helix Theme Format", theme.Name)
-
+	log.Printf("Theme type is %s", theme.Theme_type)
 	var colorCodes ColorCodes
 	// var palette helix.Palette
 
@@ -42,20 +42,5 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 		colorCodes = append(colorCodes, t)
 	}
 
-	var uniqueColorCodes []string
-
-	for i := 0; i < len(colorCodes)-1; i++ {
-		exists := utils.Find(colorCodes, colorCodes[i])
-		if !exists {
-			uniqueColorCodes = append(uniqueColorCodes, colorCodes[i])
-		}
-	}
-
 	log.Printf("Found %v Color Codes", len(colorCodes))
-	log.Printf("Searching for duplicates...")
-	if len(uniqueColorCodes) == 0 {
-		log.Print("No Duplicates found")
-	} else {
-		log.Printf("%v Duplicates found", len(uniqueColorCodes))
-	}
 }

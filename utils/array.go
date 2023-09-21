@@ -1,15 +1,12 @@
 package utils
 
-func Find[T comparable](array []T, check T) bool {
+func Find[T comparable](array []T, check T) T {
 	var curr T
-	var found bool
-	for i := 0; i < len(array)-1; i++ {
-		curr = array[i]
-		if curr == check {
-			found = true
-		} else {
-			// found = false
+	for i := 0; i < len(array); i++ {
+		val := array[i]
+		if val == check {
+			curr = val
 		}
 	}
-	return found
+	return curr
 }
