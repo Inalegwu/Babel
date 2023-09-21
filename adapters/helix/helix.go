@@ -25,38 +25,34 @@ type Name struct {
 
 type ColorApiResponse struct {
 	Hex  map[string]string `json:"hex"`
-	Name map[string]Name   `json:"name"`
+	Name map[string]any    `json:"name"`
 }
 
 func New() HelixThemeConfig {
 	return HelixThemeConfig{}
 }
 
-func MakeColorPalette(colorCodes []string, theme theme.Theme) {
+func MakeColorPalette(colorCodes []string, theme theme.Theme) []ColorApiResponse {
 	log.Printf("Generating Color Palette")
 
-	var colorApiResponse ColorApiResponse
-
-	// var colorApiResponseArray []ColorApiResponse
+	var colorApiResponseArray []ColorApiResponse
 
 	for _, v := range theme.Colors {
 		parts := strings.Split(v, "#")
 		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
+		var response ColorApiResponse
+
 		error.HandleError(err)
 
 		body, err := ioutil.ReadAll(resp.Body)
 
-		log.Printf("%s", string(body))
-
-		err = json.Unmarshal(body, &colorApiResponse)
+		err = json.Unmarshal(body, &response)
 
 		error.HandleError(err)
 
-		log.Printf("%v", colorApiResponse)
-
+		colorApiResponseArray = append(colorApiResponseArray, response)
 	}
-}
-
-func FromVsConfig(theme.Theme) {
+	log.Printf("Color Palette Generated Successfully")
+	return colorApiResponseArray
 }
