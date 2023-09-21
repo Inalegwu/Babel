@@ -16,9 +16,16 @@ type (
 	Palette          map[string]string
 )
 
+type Name struct {
+	Value           string `json:"value"`
+	ClosestNamedHex string `json:"closest_named_hex"`
+	ExactMatchName  bool   `json:"exact_match_name"`
+	Distance        int    `json:"distance"`
+}
+
 type ColorApiResponse struct {
 	Hex  map[string]string `json:"hex"`
-	Name map[string]string `json:"name"`
+	Name map[string]Name   `json:"name"`
 }
 
 func New() HelixThemeConfig {
@@ -34,7 +41,6 @@ func MakeColorPalette(colorCodes []string, theme theme.Theme) {
 
 	for _, v := range theme.Colors {
 		parts := strings.Split(v, "#")
-		log.Printf("%s", parts[1])
 		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
 		var response ColorApiResponse
