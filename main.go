@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	log.SetPrefix("VSCONVERT :: ")
+	log.SetPrefix("babel :: ")
 	filePath := os.Getenv("FILE")
 	convertFlag := os.Getenv("FLAG")
 

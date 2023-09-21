@@ -24,9 +24,16 @@ func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
 
 	var fileAsString []byte
 
+	// for each line of input
+	// This is so far the only way I can
+	// achieve this , I don't know why
 	for scanner.Scan() {
+		// extrat the bytes
 		line := scanner.Bytes()
+		// for each substring in the line
 		for i := 0; i < len(line); i++ {
+			// append the item to the fileAsString
+			// variable
 			fileAsString = append(fileAsString, line[i])
 		}
 	}
