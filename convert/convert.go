@@ -39,6 +39,9 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 
 	for _, t := range theme.Colors {
 		parts := strings.Split(t, "#")
+		// splitting by space because strings.Split(t,"#") strips the #
+		// I forgot this 45 Seconds after implementing this
+		// this journey is about to be wild
 		if parts[0] == "" {
 			colorCodes = append(colorCodes, t)
 		}
