@@ -35,7 +35,7 @@ func New() HelixThemeConfig {
 func MakeColorPalette(colorCodes []string, theme theme.Theme) {
 	log.Printf("Generating Color Palette")
 
-	// var colorApiResponse ColorApiResponse
+	var colorApiResponse ColorApiResponse
 
 	// var colorApiResponseArray []ColorApiResponse
 
@@ -43,19 +43,17 @@ func MakeColorPalette(colorCodes []string, theme theme.Theme) {
 		parts := strings.Split(v, "#")
 		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
-		var response ColorApiResponse
-
 		error.HandleError(err)
 
 		body, err := ioutil.ReadAll(resp.Body)
 
 		log.Printf("%s", string(body))
 
-		err = json.Unmarshal(body, &response)
+		err = json.Unmarshal(body, &colorApiResponse)
 
 		error.HandleError(err)
 
-		log.Printf("%v", response)
+		log.Printf("%v", colorApiResponse)
 
 	}
 }
