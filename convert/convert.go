@@ -57,7 +57,7 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 
 	log.Printf("Found %v unique color codes. These will be used to generate the Color Palette", len(uniqueColorCodes))
 
-	palette := helix.MakeColorPalette(uniqueColorCodes, theme)
+	palette := helix.MakeColorPalette(uniqueColorCodes)
 
 	log.Printf("%v", len(palette))
 }

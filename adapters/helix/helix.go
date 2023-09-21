@@ -8,11 +8,10 @@ import (
 	"strings"
 
 	"github.com/Inalegwu/babel/error"
-	"github.com/Inalegwu/babel/theme"
 )
 
 type (
-	HelixThemeConfig struct{}
+	HelixThemeConfig map[string]any
 	Palette          map[string]string
 )
 
@@ -32,12 +31,12 @@ func New() HelixThemeConfig {
 	return HelixThemeConfig{}
 }
 
-func MakeColorPalette(colorCodes []string, theme theme.Theme) []ColorApiResponse {
-	log.Printf("Generating Color Palette")
+func MakeColorPalette(colorCodes []string) []ColorApiResponse {
+	log.Printf("Generating Color Palette.This may take a while")
 
 	var colorApiResponseArray []ColorApiResponse
 
-	for _, v := range theme.Colors {
+	for _, v := range colorCodes {
 		parts := strings.Split(v, "#")
 		resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + parts[1])
 
@@ -53,6 +52,8 @@ func MakeColorPalette(colorCodes []string, theme theme.Theme) []ColorApiResponse
 
 		colorApiResponseArray = append(colorApiResponseArray, response)
 	}
+
 	log.Printf("Color Palette Generated Successfully")
+
 	return colorApiResponseArray
 }
