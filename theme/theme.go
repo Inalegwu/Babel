@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"io/fs"
-	"log"
 
 	"github.com/Inalegwu/babel/error"
 )
@@ -17,7 +16,6 @@ type Theme struct {
 }
 
 func New(scanner *bufio.Scanner, fileStat fs.FileInfo) Theme {
-	log.Printf("Reading %s", fileStat.Name())
 	var themeConfig Theme
 
 	scanner.Split(bufio.ScanLines)
