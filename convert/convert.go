@@ -4,6 +4,7 @@ import (
 	"log"
 	"strings"
 
+	// "github.com/Inalegwu/babel/adapters/helix"
 	"github.com/Inalegwu/babel/theme"
 )
 
@@ -36,6 +37,7 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Converting %s to Helix Theme Format", theme.Name)
 
 	var colorCodes ColorCodes
+	// var palette helix.Palette
 
 	for _, t := range theme.Colors {
 		parts := strings.Split(t, "#")
@@ -45,6 +47,8 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 		if parts[0] == "" {
 			colorCodes = append(colorCodes, t)
 		}
+
 	}
+
 	log.Printf("Found %v Color Codes", len(colorCodes))
 }
