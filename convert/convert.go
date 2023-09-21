@@ -5,6 +5,7 @@ import (
 
 	"github.com/Inalegwu/babel/adapters/helix"
 	"github.com/Inalegwu/babel/theme"
+	"github.com/Inalegwu/babel/utils"
 )
 
 const (
@@ -43,7 +44,20 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 
 	log.Printf("Found %v Color Codes", len(colorCodes))
 
-	palette := helix.MakeColorPalette(colorCodes, theme)
+	var uniqueColorCodes ColorCodes
+
+	log.Print("Searching for Duplicates")
+
+	for _, t := range colorCodes {
+		alreadyInUnique := utils.Find(uniqueColorCodes, t)
+		if !alreadyInUnique {
+			uniqueColorCodes = append(uniqueColorCodes, t)
+		}
+	}
+
+	log.Printf("Found %v unique color codes. These will be used to generate the Color Palette", len(uniqueColorCodes))
+
+	palette := helix.MakeColorPalette(uniqueColorCodes, theme)
 
 	log.Printf("%v", len(palette))
 }
