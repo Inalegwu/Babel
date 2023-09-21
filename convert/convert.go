@@ -2,6 +2,7 @@ package convert
 
 import (
 	"log"
+	"strings"
 
 	"github.com/Inalegwu/vsconvert/theme"
 )
@@ -29,7 +30,19 @@ func (c *Converter) Convert(theme theme.Theme) error {
 	return nil
 }
 
+type ColorCodes []string
+
 func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Converting %s to Helix Theme Format", theme.Name)
-	log.Printf("Theme type detected : %s", theme.Theme_type)
+
+	var colorCodes ColorCodes
+
+	for _, t := range theme.Colors {
+		parts := strings.Split(t, "#")
+		if parts[0] == "" {
+			colorCodes = append(colorCodes, t)
+		}
+	}
+	log.Printf("Found %v colorCodes", len(colorCodes))
+	log.Printf("%v", colorCodes)
 }
