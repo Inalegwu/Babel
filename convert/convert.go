@@ -43,6 +43,5 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 			colorCodes = append(colorCodes, t)
 		}
 	}
-	log.Printf("Found %v colorCodes", len(colorCodes))
-	log.Printf("%v", colorCodes)
+	log.Printf("Found %v Color Codes", len(colorCodes))
 }
