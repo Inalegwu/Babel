@@ -14,23 +14,17 @@ type (
 	Palette          map[string]string
 )
 
-type Name struct {
-	Value           string `json:"value"`
-	ClosestNamedHex string `json:"closest_named_hex"`
-	ExactMatchName  bool   `json:"exact_match_name"`
-	Distance        int    `json:"distance"`
-}
+type (
+	Scope    []string
+	Settings map[string]string
+)
 
 func New(colorPalette []request.ColorApiResponse, theme theme.Theme) HelixThemeConfig {
-	// convert color palette to use
-	// in theme config definition
-
-	// var palette map[string]string
-
 	return HelixThemeConfig{
 		// define the color scheme type "dark"|"light"|"other"
 		"type": theme.Theme_type,
 		// tree-sitter scopes
+
 	}
 }
 
