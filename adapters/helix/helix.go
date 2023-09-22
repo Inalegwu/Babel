@@ -24,18 +24,13 @@ type Name struct {
 func New(colorPalette []request.ColorApiResponse, theme theme.Theme) HelixThemeConfig {
 	// convert color palette to use
 	// in theme config definition
-	var palette map[string]string
 
-	for _, v := range colorPalette {
-		name := v.Hex
-		palette[name["value"]] = v.Hex["value"]
-	}
+	// var palette map[string]string
 
 	return HelixThemeConfig{
 		// define the color scheme type "dark"|"light"|"other"
 		"type": theme.Theme_type,
 		// tree-sitter scopes
-		"palette": palette,
 	}
 }
 
