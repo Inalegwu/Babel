@@ -11,6 +11,7 @@ import (
 
 const (
 	HelixThemeConfig = 1
+	VimThemeConfig   = 2
 )
 
 type Converter struct {
@@ -26,6 +27,8 @@ func New(to int) Converter {
 func (c *Converter) Convert(theme theme.Theme) error {
 	if c.to == HelixThemeConfig {
 		c.toHelixConfig(theme)
+	} else if c.to == VimThemeConfig {
+		log.Fatal("[WIP] Vim theme config adapter still under implementation")
 	} else {
 		log.Fatal("Unsupported Theme config provided , If there's one you want to see , create a PR")
 	}
