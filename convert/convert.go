@@ -5,6 +5,7 @@ import (
 
 	"github.com/Inalegwu/babel/adapters/helix"
 	customError "github.com/Inalegwu/babel/error"
+	"github.com/Inalegwu/babel/palette"
 	"github.com/Inalegwu/babel/theme"
 	"github.com/Inalegwu/babel/utils"
 )
@@ -38,14 +39,14 @@ func (c *Converter) Convert(theme theme.Theme) error {
 type ColorCodes []string
 
 func (c *Converter) toHelixConfig(theme theme.Theme) {
-	log.Printf("Converting %s to Helix Theme Format", theme.Name)
+	log.Printf("Converting %s to Theme Format", theme.Name)
 	log.Printf("Theme type is %s", theme.Theme_type)
 
 	uniqueColorCodes := findUniqueColorCodes(theme)
 
 	log.Printf("Found %v unique color codes", len(uniqueColorCodes))
 
-	palette := helix.MakeColorPalette(uniqueColorCodes)
+	palette := palette.MakeColorPalette(uniqueColorCodes)
 
 	helixTheme := helix.New(palette, theme)
 
@@ -54,6 +55,15 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("%v", string(toml))
 
 	customError.HandleError(err)
+}
+
+func (c *Converter) toVimConfig(theme theme.Theme) {
+	log.Printf("Converting %s to Theme Format", theme.Name)
+	log.Printf("Theme type is %s", theme.Theme_type)
+
+	uniqueColorCodes := findUniqueColorCodes(theme)
+
+	log.Printf("Found %v unique color codes", len(uniqueColorCodes))
 }
 
 func findUniqueColorCodes(theme theme.Theme) ColorCodes {
