@@ -50,9 +50,9 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 
 	helixTheme := helix.New(palette, theme)
 
-	toml, err := helix.WriteToml(helixTheme)
+	_, err := helix.WriteToml(helixTheme, theme)
 
-	log.Printf("%v", string(toml))
+	// log.Printf("%v", string(toml))
 
 	customError.HandleError(err)
 }
