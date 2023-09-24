@@ -38,7 +38,7 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 	log.Printf("Converting %s to Helix Theme Format", theme.Name)
 	log.Printf("Theme type is %s", theme.Theme_type)
 
-	uniqueColorCodes := generateColorCodes(theme)
+	uniqueColorCodes := findUniqueColorCodes(theme)
 
 	log.Printf("Found %v unique color codes", len(uniqueColorCodes))
 
@@ -46,12 +46,14 @@ func (c *Converter) toHelixConfig(theme theme.Theme) {
 
 	helixTheme := helix.New(palette, theme)
 
-	_, err := helix.WriteToml(helixTheme)
+	toml, err := helix.WriteToml(helixTheme)
+
+	log.Printf("%v", string(toml))
 
 	customError.HandleError(err)
 }
 
-func generateColorCodes(theme theme.Theme) ColorCodes {
+func findUniqueColorCodes(theme theme.Theme) ColorCodes {
 	var colorCodes ColorCodes
 
 	for _, t := range theme.Colors {
