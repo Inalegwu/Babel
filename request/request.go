@@ -14,6 +14,8 @@ type ColorApiResponse struct {
 }
 
 func GetColorCodeName(colorCode string) ColorApiResponse {
+	// get color code name from the https://thecolorapi.com/ to help define a
+	// palette
 	resp, err := http.Get("https://www.thecolorapi.com/id?hex=" + colorCode)
 
 	customError.HandleError(err)
@@ -24,6 +26,7 @@ func GetColorCodeName(colorCode string) ColorApiResponse {
 
 	customError.HandleError(err)
 
+	// unmarshal api response into response
 	err = json.Unmarshal(body, &response)
 
 	return response

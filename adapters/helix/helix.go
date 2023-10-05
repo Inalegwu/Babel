@@ -25,36 +25,19 @@ type ScopeSettings struct {
 
 func New(colorPalette []request.ColorApiResponse, theme theme.Theme) HelixThemeConfig {
 	log.Print("Using generated color palette to populate Helix Theme Config")
-	var scopes []ScopeSettings
 
-	// still not sure if this works
-	// must test
 	for _, t := range theme.TokenColors {
-		var scope interface{} = t["scope"]
-		var settings interface{} = t["settings"]
+		settings := t["settings"]
+		scopes := t["scopes"]
+		log.Printf("%v,%v", settings, scopes)
 
-		settingsVal, err := settings.(Settings)
+		var settingsInterface interface{} = settings.(Settings)
 
-		if !err {
-			log.Fatal("Invalid type coercion on Settings")
-		}
-
-		scopeVal, err := scope.(Scope)
-
-		if !err {
-			log.Fatal("Invalid type coercion on Scope")
-		}
-
-		scopeSetting := ScopeSettings{
-			scope:    scopeVal,
-			settings: settingsVal,
-		}
-
-		scopes = append(scopes, scopeSetting)
+		log.Printf("%v", settingsInterface)
 
 	}
 
-	log.Printf("%v", scopes)
+	log.Printf("%v", theme.TokenColors)
 
 	return HelixThemeConfig{
 		// define the color scheme type "dark"|"light"|"other"
