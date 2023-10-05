@@ -15,7 +15,7 @@ type (
 
 type (
 	Scope    []string
-	Settings map[string]any
+	Settings map[string]string
 )
 
 type ScopeSettings struct {
@@ -27,17 +27,20 @@ func New(colorPalette []request.ColorApiResponse, theme theme.Theme) HelixThemeC
 	log.Print("Using generated color palette to populate Helix Theme Config")
 
 	for _, t := range theme.TokenColors {
-		settings := t["settings"]
-		scopes := t["scopes"]
-		log.Printf("%v,%v", settings, scopes)
+		// scope := t["scope"]
+		var settings interface{} = t["settings"]
 
-		var settingsInterface interface{} = settings.(Settings)
+		log.Printf("%v", settings)
 
-		log.Printf("%v", settingsInterface)
+		v, err := settings.(Settings)
+
+		if err {
+			log.Fatal("Invalid type assertion")
+		}
+
+		log.Printf("%v", v)
 
 	}
-
-	log.Printf("%v", theme.TokenColors)
 
 	return HelixThemeConfig{
 		// define the color scheme type "dark"|"light"|"other"

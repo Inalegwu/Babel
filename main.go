@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	log.SetPrefix("babel :: ")
+	log.SetPrefix("BABEL :: ")
 	filePath := os.Getenv("FILE")
 	convertFlag := os.Getenv("FLAG")
 
